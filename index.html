@@ -691,19 +691,29 @@ svg{display:block}
   function watch(col, cb){
     (listeners[col] = listeners[col] || []).push(cb);
     ready.then(function(ok){
-      if (ok){
-        api.onSnapshot(api.collection(db, col), function(s){ cb(s.docs.map(function(d){ var x = d.data(); x.id = d.id; if (x.createdAt && x.createdAt.toMillis) x.ts = x.createdAt.toMillis(); return x; })); }, function(){ db = null; cb(lsGet(col)); });
+      if (ok && db){
+        api.onSnapshot(api.collection(db, col), function(s){ cb(s.docs.map(function(d){ var x = d.data(); x.id = d.id; if (x.createdAt && x.createdAt.toMillis) x.ts = x.createdAt.toMillis(); return x; })); },
+          function(){ db = null; Object.keys(listeners).forEach(localEmit); var m = document.getElementById('admMode'); if (m) m.textContent = 'Chế độ demo · dữ liệu lưu trên máy này'; });
       } else cb(lsGet(col));
     });
   }
   function localEmit(col){ (listeners[col] || []).forEach(function(cb){ cb(lsGet(col)); }); }
+  function lsMerge(col, id, data){
+    var list = lsGet(col), i = list.findIndex(function(x){ return x.id === id; });
+    data.id = id; if (i >= 0) list[i] = Object.assign(list[i], data); else list.push(data);
+    lsSet(col, list); localEmit(col);
+  }
+  /* put = ghi cả doc (tạo mới / ghi đè), patch = chỉ sửa vài field */
   function put(col, id, data){
-    data.ts = Date.now();
     return ready.then(function(ok){
-      if (ok && db){ var d = Object.assign({}, data, {createdAt: api.serverTimestamp()}); delete d.ts; return api.setDoc(api.doc(db, col, id), d, {merge:true}); }
-      var list = lsGet(col), i = list.findIndex(function(x){ return x.id === id; });
-      data.id = id; if (i >= 0) list[i] = Object.assign(list[i], data); else list.push(data);
-      lsSet(col, list); localEmit(col);
+      if (ok && db){ var d = Object.assign({}, data, {createdAt: api.serverTimestamp()}); return api.setDoc(api.doc(db, col, id), d); }
+      data.ts = Date.now(); lsMerge(col, id, data);
+    });
+  }
+  function patch(col, id, data){
+    return ready.then(function(ok){
+      if (ok && db) return api.updateDoc(api.doc(db, col, id), data);
+      lsMerge(col, id, data);
     });
   }
   function del(col, id){
@@ -733,7 +743,7 @@ svg{display:block}
     if (GUEST.num) f.num.value = GUEST.num >= 6 ? '6+' : String(GUEST.num);
   }
   applyGuest();
-  if (GID) getOne(COL_G, GID).then(function(g){ if (g){ GUEST.name = g.name || GUEST.name; GUEST.group = g.group || ''; GUEST.num = g.num; applyGuest(); put(COL_G, GID, {opened: true}).catch(function(){}); } });
+  if (GID) getOne(COL_G, GID).then(function(g){ if (g){ GUEST.name = g.name || GUEST.name; GUEST.group = g.group || ''; GUEST.num = g.num; applyGuest(); patch(COL_G, GID, {opened: true}).catch(function(){}); } });
 
   /* ---------- barcode ---------- */
   (function(){ var s = '', x = 2, seed = 2811; while (x < 118){ seed = (seed * 9301 + 49297) % 233280; var w = 1 + Math.floor(seed / 233280 * 3.2); s += '<rect x="' + x + '" y="0" width="' + w + '" height="36" fill="currentColor"/>'; x += w + 1 + Math.floor((seed % 7) / 3); } $('#bc').innerHTML = s; })();
@@ -792,7 +802,7 @@ svg{display:block}
     var id = GID || ('p_' + rid());
     var btn = form.querySelector('.send'); btn.disabled = true;
     put(COL_R, id, data).then(function(){
-      if (GID) put(COL_G, GID, {status: data.attend, rsvpNum: data.num}).catch(function(){});
+      if (GID) patch(COL_G, GID, {status: data.attend, rsvpNum: data.num}).catch(function(){});
       btn.disabled = false; form.msg.value = '';
       note.textContent = data.attend === 'yes' ? 'Cảm ơn bạn! Hẹn gặp ở sân nhà nhé ♡' : 'Cảm ơn bạn đã báo, tụi mình vẫn nhận lời chúc nha ♡';
     }, function(){ btn.disabled = false; note.textContent = 'Gửi chưa được, bạn thử lại nhé.'; });
