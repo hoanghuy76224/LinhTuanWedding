@@ -7,3 +7,21 @@
 .adm [hidden]{display:none!important}.adm .row{flex-wrap:wrap}.adm .row input{min-width:160px;flex:1}.adm .row select{min-width:140px;flex:1}.adm .gi .mt{overflow-wrap:anywhere}.adm .wish-heading{margin-top:24px}.adm label{display:block;font-size:12px;margin:10px 0 4px}.adm .edit-actions{display:flex;gap:8px;margin-top:14px}.stats small{line-height:1.4;display:block}.admin-help{font-size:12px;color:var(--soft);margin:10px 0}.adm .b:disabled{opacity:.6}.adm .box h2{font-family:var(--disp)}
 @media(max-width:360px){.gift{gap:10px}.gift-back{padding:8px 5px}.gift-name{font-size:26px}.gift-bank{font-size:10px}.stats{grid-template-columns:repeat(3,1fr)}.card{padding:16px 12px}.road{padding-left:52px}.pol figcaption{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.gift-rotor{transition:none}}
+
+/* One continuous album, one full frame at a time. */
+.album-section{padding-bottom:42px}
+.album-carousel{position:relative;min-width:0}
+.album-track{display:flex;width:100%;overflow-x:auto;overflow-y:hidden;gap:0;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:16px;overscroll-behavior-x:contain;touch-action:pan-x pan-y pinch-zoom;background:rgba(255,255,255,.78)}
+.album-track::-webkit-scrollbar{display:none}
+.album-track .album-slide{flex:0 0 100%;width:100%;min-width:100%;aspect-ratio:4/5;scroll-snap-align:start;scroll-snap-stop:always;border-radius:0;background:transparent}
+.album-track .album-slide img{width:100%;height:100%;object-fit:contain;object-position:center}
+.album-toolbar{display:flex;align-items:center;justify-content:center;gap:28px;margin-top:16px}
+.album-arrow{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.72);color:var(--ink);font:20px/1 Arial,sans-serif;cursor:pointer}
+.album-count{min-width:68px;text-align:center;font:12px/1.4 var(--caps);letter-spacing:.14em;color:var(--soft)}
+.album-progress{height:2px;background:var(--line);margin:16px auto 0;max-width:180px;overflow:hidden;border-radius:2px}
+.album-progress span{display:block;height:100%;width:3.333333%;background:var(--red);transition:width .4s ease}
+.album-auto{display:block;margin:10px auto 0;border:0;background:none;font:11px/1.5 var(--serif);color:var(--soft);text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px 12px}
+.album-arrow:focus-visible,.album-auto:focus-visible,.album-track:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.date-photo .pol .wedding-photo{aspect-ratio:3/2}
+.date-photo .pol .wedding-photo img{object-fit:cover;object-position:center}
+@media(prefers-reduced-motion:reduce){.album-progress span{transition:none}}
