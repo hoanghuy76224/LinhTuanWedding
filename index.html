@@ -331,6 +331,7 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
 .preview-strip{background:#567c91}
 
 </style>
+<link rel="stylesheet" href="enhancements.css?v=20261115-1">
 </head>
 <body class="locked" data-preview="true">
 
@@ -646,19 +647,7 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
 <button type="button" class="wedding-photo " data-photo="30" aria-label="Xem Ảnh cưới Mỹ Linh và Trần Tuấn"><img src="assets/photos/photo-30.webp" alt="Ảnh cưới Mỹ Linh và Trần Tuấn" loading="lazy" decoding="async"></button></div>
   </section>
 
-  <!-- ================= MỪNG CƯỚI ================= -->
-  <section class="sec" style="padding-top:20px">
-    <div class="sec-h rv">
-      <div class="eyebrow">Hộp mừng cưới</div>
-      <h2>Gửi quà</h2>
-      <div class="rule"><i></i><svg viewBox="0 0 24 24"><use href="#heart"/></svg><i></i></div>
-    </div>
-    <div class="gift rv">
-      <div class="g"><span class="pill">CÔ DÂU</span><div class="ph"><span>QR ngân hàng</span></div><div class="n">ĐÀM MỸ LINH</div><div class="bk">Ngân hàng · STK</div></div>
-      <div class="g"><span class="pill">CHÚ RỂ</span><div class="ph"><span>QR ngân hàng</span></div><div class="n">TRẦN TUẤN</div><div class="bk">Ngân hàng · STK</div></div>
-    </div>
-  </section>
-
+<section class="sec gift-section" id="gift"><div class="sec-h rv"><div class="eyebrow">Hộp mừng cưới</div><h2>Với tình thương<br>&amp; lòng biết ơn</h2></div><p class="gift-message rv">Nếu bạn muốn gửi một chút quà mừng, thông tin dưới đây xin được gửi kèm — còn với chúng mình, món quà lớn nhất vẫn là thời gian và sự hiện diện của bạn.</p><div class="gift rv"><article class="gift-card"><button type="button" class="gift-flip" data-person="bride" aria-pressed="false" aria-label="Xem QR Đàm Mỹ Linh"><span class="gift-rotor"><span class="gift-face gift-front"><img src="assets/photos/photo-19.webp" alt="Cô dâu Đàm Mỹ Linh" loading="lazy"><small>Chạm để lật xem QR</small></span><span class="gift-face gift-back" aria-hidden="true"><b>BIDV · CN Thanh Xuân</b><span class="qr-crop bride"><img src="assets/qr/bride.png" alt="" loading="lazy"></span><small>ĐÀM THỊ MỸ LINH</small><small>Chạm để trở về ảnh</small></span></span></button><span class="gift-role">Cô dâu</span><h3 class="gift-name">Đàm Mỹ Linh</h3><div class="gift-bank">BIDV · CN Thanh Xuân</div><span class="gift-account">2224188738</span><div class="gift-actions"><button type="button" data-gift-copy="bride">Sao chép STK</button><button type="button" data-gift-view="bride">Mở QR lớn</button></div></article><article class="gift-card"><button type="button" class="gift-flip" data-person="groom" aria-pressed="false" aria-label="Xem QR Trần Tuấn"><span class="gift-rotor"><span class="gift-face gift-front"><img src="assets/photos/photo-12.webp" alt="Chú rể Trần Tuấn" loading="lazy"><small>Chạm để lật xem QR</small></span><span class="gift-face gift-back" aria-hidden="true"><b>Techcombank</b><span class="qr-crop groom"><img src="assets/qr/groom.png" alt="" loading="lazy"></span><small>TRẦN VĂN TUẤN</small><small>Chạm để trở về ảnh</small></span></span></button><span class="gift-role">Chú rể</span><h3 class="gift-name">Trần Tuấn</h3><div class="gift-bank">Techcombank</div><span class="gift-account">19030574192010</span><div class="gift-actions"><button type="button" data-gift-copy="groom">Sao chép STK</button><button type="button" data-gift-view="groom">Mở QR lớn</button></div></article></div><p class="gift-hint rv">Chạm vào ảnh để lật xem mã QR của cô dâu, chú rể.</p></section>
   <footer class="foot">
     <div class="q">Hạnh phúc của chúng con trọn vẹn hơn<br>khi có ông bà, cô chú bác, anh chị<br>và các bạn cùng chung vui</div>
     <div class="h-names" style="font-size:clamp(32px,9.5vw,46px)"><span>Mỹ Linh</span><svg viewBox="0 0 24 24"><use href="#heart-o"/></svg><span>Trần Tuấn</span></div>
@@ -685,7 +674,7 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
     </div>
     <div class="stats" id="stats"></div>
 
-    <div class="box">
+    <div class="box" id="guestEditBox" hidden><h2>Sửa khách mời</h2><form id="guestEditForm"><label for="editName">Tên trên thiệp</label><input id="editName" maxlength="80" required><label for="editGroup">Nhóm</label><select id="editGroup"><option>Nhà gái</option><option>Nhà trai</option><option>Bạn cô dâu</option><option>Bạn chú rể</option><option>Đồng nghiệp</option><option>Hàng xóm</option></select><label for="editPhone">SĐT / Zalo</label><input id="editPhone" maxlength="20"><label for="editNum">Số người dự kiến</label><input id="editNum" type="number" min="1" max="100" required><div class="edit-actions"><button class="b" type="submit">Lưu thay đổi</button><button class="b gh" type="button" id="editCancel">Hủy</button></div></form><p class="admin-help">Link mời đã gửi vẫn dùng được sau khi sửa tên.</p></div><div class="box">
       <h2>Thêm khách mời</h2>
       <div class="row" style="margin-bottom:8px">
         <input id="gName" placeholder="Tên trên thiệp (VD: Anh Hùng &amp; gia đình)">
@@ -709,13 +698,13 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
       <div class="gl" id="gl"></div>
     </div>
 
-    <div class="box">
+    <div class="box"><h2>Sổ lời chúc</h2><div id="adminWishes" class="gl"></div></div><div class="box">
       <h2>Phản hồi từ link chung (khách không có trong danh sách)</h2>
       <div class="gl" id="gExtra"></div>
     </div>
   </div>
 </div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast"></div><dialog class="qr-dialog" id="giftQRDialog"><h3></h3><p class="gift-bank"></p><span class="qr-crop"><img alt=""></span><span class="gift-account"></span><a href="" download>Tải ảnh QR gốc</a><br><button type="button" class="btn">Đóng</button></dialog>
 
 <script>
 (function(){
@@ -742,7 +731,7 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
     ready.then(function(ok){
       if (ok && db){
         api.onSnapshot(api.collection(db, col), function(s){ cb(s.docs.map(function(d){ var x = d.data(); x.id = d.id; if (x.createdAt && x.createdAt.toMillis) x.ts = x.createdAt.toMillis(); return x; })); },
-          function(){ db = null; Object.keys(listeners).forEach(localEmit); var m = document.getElementById('admMode'); if (m) m.textContent = 'Chế độ demo · dữ liệu lưu trên máy này'; });
+          function(){ var m=document.getElementById('admMode'); if(m)m.textContent='Không thể đọc dữ liệu online. Kiểm tra kết nối và quyền Firebase.'; });
       } else cb(lsGet(col));
     });
   }
@@ -879,19 +868,22 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
   function unlock(){
     $('#admLock').hidden = true; $('#admIn').hidden = false;
     if (started) return; started = true;
-    ready.then(function(ok){ $('#admMode').textContent = ok && db ? 'Đang đồng bộ online · cập nhật trực tiếp' : 'Chế độ demo · dữ liệu lưu trên máy này'; });
-    watch(COL_G, function(l){ G = l; draw(); });
+    ready.then(function(ok){ $('#admMode').textContent = ok && db ? 'Đang kết nối dữ liệu online…' : 'Chế độ offline · chỉ lưu trên thiết bị này'; });
+    watch(COL_G, function(l){ G = l; if(db)$('#admMode').textContent='Đã đồng bộ online · cập nhật trực tiếp'; draw(); });
     watch(COL_R, function(l){ R = l; draw(); });
   }
+  var editingId=null;
+  $('#editCancel').addEventListener('click',function(){editingId=null;$('#guestEditBox').hidden=true;});
+  $('#guestEditForm').addEventListener('submit',function(e){e.preventDefault();if(!editingId)return;var name=$('#editName').value.trim();if(!name)return;var btn=this.querySelector('[type=submit]');btn.disabled=true;patch(COL_G,editingId,{name:name.slice(0,80),group:$('#editGroup').value,phone:$('#editPhone').value.trim().slice(0,20),num:+$('#editNum').value}).then(function(){editingId=null;$('#guestEditBox').hidden=true;toast('Đã lưu thay đổi');},function(){toast('Chưa lưu được. Bạn thử lại nhé.');}).finally(function(){btn.disabled=false;});});
   function link(g){ return SITE + '?g=' + g.id + '&n=' + encodeURIComponent(g.name); }
   function addGuest(name){
     name = name.trim(); if (!name) return Promise.resolve();
     var id = rid();
     return put(COL_G, id, {name: name.slice(0, 80), group: $('#gGroup').value, phone: $('#gPhone').value.trim().slice(0, 20), num: +$('#gNum').value, status: 'pending'});
   }
-  $('#gAdd').addEventListener('click', function(){ var n = $('#gName').value; if (!n.trim()) return $('#gName').focus(); addGuest(n).then(function(){ $('#gName').value = ''; $('#gPhone').value = ''; toast('Đã thêm ' + n.trim()); }); });
+  $('#gAdd').addEventListener('click', function(){ var n = $('#gName').value; if (!n.trim()) return $('#gName').focus(); addGuest(n).then(function(){ $('#gName').value = ''; $('#gPhone').value = ''; toast('Đã thêm ' + n.trim()); },function(){toast('Chưa thêm được. Kiểm tra kết nối và quyền Firebase.');}); });
   $('#gName').addEventListener('keydown', function(e){ if (e.key === 'Enter') $('#gAdd').click(); });
-  $('#gBulkAdd').addEventListener('click', function(){ var lines = $('#gBulk').value.split('\n').filter(function(s){ return s.trim(); }); Promise.all(lines.map(addGuest)).then(function(){ $('#gBulk').value = ''; toast('Đã thêm ' + lines.length + ' khách'); }); });
+  $('#gBulkAdd').addEventListener('click', function(){ var lines = $('#gBulk').value.split('\n').filter(function(s){ return s.trim(); }); Promise.all(lines.map(addGuest)).then(function(){ $('#gBulk').value = ''; toast('Đã thêm ' + lines.length + ' khách'); },function(){toast('Chưa lưu đủ danh sách. Kiểm tra dữ liệu trước khi thử lại.');}); });
   $('#q').addEventListener('input', draw);
 
   function rsvpOf(g){ return R.find(function(r){ return r.id === g.id || r.guestId === g.id; }); }
@@ -916,9 +908,10 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
     $('#gl').innerHTML = list.length ? list.map(function(g){
       var s = statusOf(g), r = rsvpOf(g);
       return '<div class="gi" data-id="' + esc(g.id) + '"><div class="nm">' + esc(g.name) + '<span class="badge ' + s + '">' + ST[s] + (s === 'y' && r ? ' · ' + esc(r.num) + ' người' : '') + '</span></div>' +
-        '<div class="ac"><button type="button" data-a="copy">Copy link</button><button type="button" data-a="open">Xem</button><button type="button" class="del" data-a="del">Xoá</button></div>' +
+        '<div class="ac"><button type="button" data-a="edit">Sửa</button><button type="button" data-a="copy">Copy link</button><button type="button" data-a="open">Xem</button><button type="button" class="del" data-a="del">Xoá</button></div>' +
         '<div class="mt">' + esc(g.group) + (g.phone ? ' · ' + esc(g.phone) : '') + ' · dự kiến ' + esc(g.num || 1) + ' người' + (r && r.wish ? '<br>“' + esc(r.wish) + '”' : '') + '</div></div>';
     }).join('') : '<div class="wn-empty">Chưa có khách nào. Thêm khách ở trên để tạo link mời riêng.</div>';
+    $('#adminWishes').innerHTML=R.filter(function(r){return r.wish;}).sort(function(a,b){return (b.ts||0)-(a.ts||0);}).map(function(r){return '<div class="gi"><div class="nm">'+esc(r.guestName)+'</div><div class="mt">'+esc(r.wish)+'</div></div>';}).join('')||'<p class="admin-help">Chưa có lời chúc.</p>';
     $('#gExtra').innerHTML = extra.length ? extra.map(function(r){
       return '<div class="gi" data-rid="' + esc(r.id) + '"><div class="nm">' + esc(r.guestName) + '<span class="badge ' + (r.attend === 'yes' ? 'y' : 'n') + '">' + (r.attend === 'yes' ? 'Sẽ tới · ' + esc(r.num) + ' người' : 'Không tới') + '</span></div><div class="ac"><button type="button" class="del" data-a="delr">Xoá</button></div><div class="mt">' + (r.wish ? '“' + esc(r.wish) + '”' : 'Không có lời chúc') + '</div></div>';
     }).join('') : '<div class="wn-empty">Chưa có phản hồi nào từ link chung.</div>';
@@ -930,6 +923,7 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
     var row = b.closest('.gi'), a = b.dataset.a;
     if (a === 'delr'){ if (confirm('Xoá phản hồi này?')) del(COL_R, row.dataset.rid); return; }
     var g = G.find(function(x){ return x.id === row.dataset.id; }); if (!g) return;
+    if (a === 'edit'){ editingId=g.id; $('#editName').value=g.name; $('#editGroup').value=g.group; $('#editPhone').value=g.phone||''; $('#editNum').value=g.num||1; $('#guestEditBox').hidden=false; $('#guestEditBox').scrollIntoView({behavior:'smooth',block:'start'}); $('#editName').focus({preventScroll:true});return; }
     if (a === 'copy') copy(link(g)).then(function(){ toast('Đã copy link mời ' + g.name); });
     if (a === 'open') window.open(link(g), '_blank');
     if (a === 'del' && confirm('Xoá khách ' + g.name + '?')) del(COL_G, g.id);
@@ -938,7 +932,7 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
     var rows = [['Tên', 'Nhóm', 'SĐT', 'Dự kiến', 'Trạng thái', 'Số người xác nhận', 'Lời chúc', 'Link mời']];
     G.forEach(function(g){ var r = rsvpOf(g); rows.push([g.name, g.group, g.phone || '', g.num || 1, ST[statusOf(g)], r ? r.num : '', r ? r.wish || '' : '', link(g)]); });
     R.filter(function(r){ return !r.guestId; }).forEach(function(r){ rows.push([r.guestName, 'Link chung', '', '', r.attend === 'yes' ? 'Sẽ tới' : 'Không tới', r.num, r.wish || '', '']); });
-    var csv = '﻿' + rows.map(function(r){ return r.map(function(c){ return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var csv = '﻿' + rows.map(function(r){ return r.map(function(c){ return '"' + String(c).replace(/^[=+@\t\r-]/, function(m){return "'"+m;}).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
     var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv'})); a.download = 'khach-moi-linh-tuan.csv'; a.click();
   });
 })();
@@ -956,5 +950,6 @@ body[data-preview="true"] .wedding-photo::after{content:"khunglongcon.com";posit
   box.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){e.preventDefault();show(current-1);}if(e.key==='ArrowRight'){e.preventDefault();show(current+1);}});
 })();
 </script>
+<script src="enhancements.js?v=20261115-1"></script>
 </body>
 </html>
