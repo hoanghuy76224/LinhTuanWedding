@@ -25,3 +25,4 @@
 .date-photo .pol .wedding-photo{aspect-ratio:3/2}
 .date-photo .pol .wedding-photo img{object-fit:cover;object-position:center}
 @media(prefers-reduced-motion:reduce){.album-progress span{transition:none}}
+.couple-card h3{white-space:nowrap;font-size:clamp(21px,6.5vw,32px)}
