@@ -20,10 +20,24 @@
   var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var current=0,automatic=!reduced,visible=false,touching=false,pausedUntil=0,frame=0;
   var viewer=document.getElementById('photoViewer');
+  function fit(){
+    var s=slides[current];
+    if(s&&s.offsetHeight)track.style.height=s.offsetHeight+'px';
+  }
+  slides.forEach(function(sl){
+    var im=sl.querySelector('img');
+    if(!im)return;
+    function ratio(){
+      if(im.naturalWidth&&im.naturalHeight){sl.style.aspectRatio=im.naturalWidth+'/'+im.naturalHeight;fit();}
+    }
+    if(im.complete)ratio();else im.addEventListener('load',ratio);
+  });
+  window.addEventListener('resize',fit);
   function update(){
     var width=track.clientWidth;
     if(!width)return;
     current=Math.max(0,Math.min(slides.length-1,Math.round(track.scrollLeft/width)));
+    fit();
     counter.textContent=String(current+1).padStart(2,'0')+' / '+slides.length;
     progress.style.width=((current+1)/slides.length*100)+'%';
   }
