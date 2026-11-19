@@ -97,7 +97,7 @@
   var go=document.getElementById('goBtn');
   if(!go)return;
   var bgm=document.createElement('audio');
-  bgm.src='/music.mp3';bgm.loop=true;bgm.preload='auto';
+  bgm.src='/music.mp3?v=motnha';bgm.loop=true;bgm.preload='auto';
   var btn=document.createElement('button');
   btn.type='button';btn.className='mus';btn.setAttribute('aria-label','Bật/tắt nhạc');
   btn.innerHTML='<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 18.2V5.6l11-2.4v12.6a3.2 3.2 0 1 1-1.8-2.9V7.1L10.8 8.7v9.5A3.2 3.2 0 1 1 9 15.3Z"/></svg>';
