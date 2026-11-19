@@ -26,3 +26,13 @@
 .date-photo .pol .wedding-photo img{object-fit:cover;object-position:center}
 @media(prefers-reduced-motion:reduce){.album-progress span{transition:none}}
 .couple-card h3{white-space:nowrap;font-size:clamp(21px,6.5vw,32px)}
+/* Background music toggle. */
+.mus{position:fixed;right:14px;bottom:calc(68px + env(safe-area-inset-bottom));z-index:60;width:42px;height:42px;border-radius:50%;border:1px solid #ffffffaa;background:#3f505cdd;color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 6px 16px -6px #17232c88;opacity:0;pointer-events:none;transition:opacity .6s;-webkit-tap-highlight-color:transparent;padding:0}
+body[data-preview="false"] .mus{bottom:calc(14px + env(safe-area-inset-bottom))}
+.mus.show{opacity:1;pointer-events:auto}
+.mus svg{width:19px;height:19px}
+.mus::after{content:"";position:absolute;width:24px;height:2px;background:#fff;transform:rotate(-45deg);border-radius:2px}
+.mus.on::after{display:none}
+.mus.on svg{animation:musSpin 4s linear infinite}
+@keyframes musSpin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.mus.on svg{animation:none}}

@@ -90,3 +90,25 @@
   }
   syncToggle();update();
 })();
+
+/* Background music: starts when the guest opens the card, toggle button afterwards. */
+(function(){
+  'use strict';
+  var go=document.getElementById('goBtn');
+  if(!go)return;
+  var bgm=document.createElement('audio');
+  bgm.src='/music.mp3';bgm.loop=true;bgm.preload='auto';
+  var btn=document.createElement('button');
+  btn.type='button';btn.className='mus';btn.setAttribute('aria-label','Bật/tắt nhạc');
+  btn.innerHTML='<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9 18.2V5.6l11-2.4v12.6a3.2 3.2 0 1 1-1.8-2.9V7.1L10.8 8.7v9.5A3.2 3.2 0 1 1 9 15.3Z"/></svg>';
+  document.body.appendChild(bgm);document.body.appendChild(btn);
+  function sync(){btn.classList.toggle('on',!bgm.paused);}
+  function play(){bgm.volume=.7;var p=bgm.play();if(p&&p.then)p.then(sync,sync);else sync();}
+  btn.addEventListener('click',function(){if(bgm.paused)play();else{bgm.pause();sync();}});
+  bgm.addEventListener('play',sync);bgm.addEventListener('pause',sync);
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden&&!bgm.paused){bgm.pause();bgm.dataset.resume='1';}
+    else if(!document.hidden&&bgm.dataset.resume){delete bgm.dataset.resume;play();}
+  });
+  go.addEventListener('click',function(){play();btn.classList.add('show');});
+})();
