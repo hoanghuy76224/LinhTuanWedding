@@ -36,3 +36,5 @@ body[data-preview="false"] .mus{bottom:calc(14px + env(safe-area-inset-bottom))}
 .mus.on svg{animation:musSpin 4s linear infinite}
 @keyframes musSpin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.mus.on svg{animation:none}}
+/* QR images are pre-cropped squares. */
+.qr-crop img,.qr-crop.bride img,.qr-crop.groom img{position:static;width:100%;height:100%;left:auto;top:auto;max-width:100%;object-fit:contain}
