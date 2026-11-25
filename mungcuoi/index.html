@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="vi"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Sổ tiền mừng · Mỹ Linh & Trần Tuấn</title>
+<style>
+:root{--bg:#e4edf2;--paper:#f6fafc;--ink:#343c42;--soft:#667780;--line:#c1d4df;--main:#536b78;--dark:#34464f;--accent:#7fa8bd;--bad:#b3483f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Lora',Georgia,serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:560px;margin:0 auto;padding:18px 14px 60px}
+h1{font-size:22px;margin:0 0 2px;color:var(--dark)}
+.sub{color:var(--soft);font-size:14px;margin:0 0 16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+label{display:block;font-size:13px;color:var(--soft);margin:10px 0 4px}
+input,select{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+.row{display:flex;gap:10px}.row>div{flex:1;min-width:0}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:11px 16px;background:var(--main);color:#fff}
+button.ghost{background:transparent;color:var(--main);border:1px solid var(--line)}
+button.danger{background:transparent;color:var(--bad);border:1px solid var(--line)}
+button.full{width:100%;margin-top:14px}
+.msg{font-size:14px;margin-top:10px;min-height:20px}.msg.err{color:var(--bad)}.msg.ok{color:var(--main)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat b{display:block;font-size:18px;color:var(--dark)}.stat span{font-size:12px;color:var(--soft)}
+.stat.wide{grid-column:1/-1}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.bar button{flex:1;min-width:120px;padding:10px 8px;font-size:14px}
+.item{display:flex;justify-content:space-between;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.item:last-child{border-bottom:0}
+.item .n{font-weight:600;word-break:break-word}.item .m{font-size:12px;color:var(--soft)}
+.item .a{text-align:right;white-space:nowrap;font-weight:600;color:var(--dark)}.item .a small{display:block;font-weight:400;color:var(--soft);font-size:12px}
+.warn{background:#fff6e0;border:1px solid #ecd9a3;border-radius:10px;padding:10px 12px;font-size:14px;margin-bottom:14px}
+.hide{display:none!important}
+.saved{font-size:12px;color:var(--soft);text-align:right;margin:-8px 2px 10px}
+dialog{border:0;border-radius:14px;padding:16px;width:min(92vw,420px);background:var(--paper)}
+dialog::backdrop{background:rgba(0,0,0,.4)}
+</style></head><body>
+<div class="wrap">
+  <h1>Sổ tiền mừng</h1>
+  <p class="sub">Mỹ Linh &amp; Trần Tuấn · 28/11/2026</p>
+
+  <!-- đăng nhập -->
+  <div id="login" class="card">
+    <label for="pw">Mật khẩu</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Nhập mật khẩu">
+    <button id="btnLogin" class="full">Mở sổ</button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+
+  <!-- app -->
+  <div id="app" class="hide">
+    <div id="defWarn" class="warn hide">Đang dùng mật khẩu mặc định. Anh chị nên đổi mật khẩu ngay để chỉ hai người xem được.</div>
+
+    <div class="card stats">
+      <div class="stat wide"><b id="sTotal">0</b><span>Tổng tiền mừng (đ)</span></div>
+      <div class="stat"><b id="sCount">0</b><span>Số khách</span></div>
+      <div class="stat"><b id="sAvg">0</b><span>Trung bình / khách (đ)</span></div>
+      <div class="stat"><b id="sGirl">0</b><span>Nhà gái (đ)</span></div>
+      <div class="stat"><b id="sBoy">0</b><span>Nhà trai (đ)</span></div>
+    </div>
+
+    <div class="bar">
+      <button id="btnXlsx">Tải file Excel</button>
+      <button id="btnPw" class="ghost">Đổi mật khẩu</button>
+      <button id="btnOut" class="ghost">Khóa sổ</button>
+    </div>
+
+    <div class="card">
+      <b id="formTitle">Thêm khoản mừng</b>
+      <label for="fName">Tên khách</label>
+      <input id="fName" autocomplete="off">
+      <div class="row">
+        <div><label for="fSide">Bên</label>
+          <select id="fSide"><option>Nhà gái</option><option>Nhà trai</option></select></div>
+        <div><label for="fRel">Quan hệ</label><input id="fRel" autocomplete="off" placeholder="Họ hàng, bạn..."></div>
+      </div>
+      <div class="row">
+        <div><label for="fAmt">Số tiền mừng (đ)</label><input id="fAmt" inputmode="numeric" autocomplete="off" placeholder="500.000"></div>
+        <div><label for="fRet">Đã trả lễ (đ)</label><input id="fRet" inputmode="numeric" autocomplete="off" placeholder="0"></div>
+      </div>
+      <label for="fNote">Ghi chú</label>
+      <input id="fNote" autocomplete="off">
+      <div class="row" style="margin-top:14px">
+        <div><button id="btnSave" class="full" style="margin-top:0">Lưu</button></div>
+        <div id="editBtns" class="hide" style="display:flex;gap:8px">
+          <button id="btnCancel" class="ghost" style="flex:1">Hủy</button>
+          <button id="btnDel" class="danger" style="flex:1">Xóa</button>
+        </div>
+      </div>
+      <div id="formMsg" class="msg"></div>
+    </div>
+
+    <div id="saved" class="saved"></div>
+    <div class="card" id="list"></div>
+  </div>
+</div>
+
+<dialog id="dlgPw">
+  <b>Đổi mật khẩu</b>
+  <label for="pwNew">Mật khẩu mới (từ 4 ký tự)</label>
+  <input id="pwNew" type="password" autocomplete="new-password">
+  <label for="pwNew2">Nhập lại mật khẩu mới</label>
+  <input id="pwNew2" type="password" autocomplete="new-password">
+  <div id="pwMsg" class="msg"></div>
+  <div class="row" style="margin-top:10px">
+    <div><button id="pwCancel" class="ghost" style="width:100%">Đóng</button></div>
+    <div><button id="pwOk" style="width:100%">Đổi</button></div>
+  </div>
+  <p class="sub" style="margin:12px 0 0;font-size:12px">Dữ liệu được mã hóa bằng mật khẩu. Quên mật khẩu thì không mở lại được dữ liệu, nên anh chị ghi nhớ kỹ.</p>
+</dialog>
+
+<script>
+(function(){
+'use strict';
+var FIREBASE_CONFIG={apiKey:"AIzaSyDKojhw5-SFWukGSN_oSjw5vxJngrfIogo",authDomain:"vo-iu-dino-848d2.firebaseapp.com",projectId:"vo-iu-dino-848d2",storageBucket:"vo-iu-dino-848d2.firebasestorage.app",messagingSenderId:"879023470388",appId:"1:879023470388:web:ecc9128f6f280b26249761"};
+var COL='mungcuoi_linhtuan', DOCID='vault', DEFAULT_PW='28112026';
+var $=function(s){return document.querySelector(s)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+function fmt(n){return (Number(n)||0).toLocaleString('vi-VN')}
+function num(s){return parseInt(String(s).replace(/\D/g,''),10)||0}
+
+/* ---------- Firestore ---------- */
+var api,db,ref,ready=Promise.all([
+  import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js'),
+  import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js')
+]).then(function(m){var app=m[0].initializeApp(FIREBASE_CONFIG);api=m[1];db=api.getFirestore(app);ref=api.doc(db,COL,DOCID);});
+
+/* ---------- mã hóa ---------- */
+var enc=new TextEncoder(),dec=new TextDecoder();
+function b64(buf){var a=new Uint8Array(buf),s='';for(var i=0;i<a.length;i++)s+=String.fromCharCode(a[i]);return btoa(s)}
+function unb64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+function key(pw,salt){
+  return crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveKey']).then(function(k){
+    return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:150000,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt']);
+  });
+}
+function encrypt(pw,obj){
+  var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12));
+  return key(pw,salt).then(function(k){return crypto.subtle.encrypt({name:'AES-GCM',iv:iv},k,enc.encode(JSON.stringify(obj)))})
+    .then(function(ct){return {v:1,salt:b64(salt),iv:b64(iv),ct:b64(ct)}});
+}
+function decrypt(pw,d){
+  return key(pw,unb64(d.salt)).then(function(k){return crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(d.iv)},k,unb64(d.ct))})
+    .then(function(p){return JSON.parse(dec.decode(p))});
+}
+
+/* ---------- state ---------- */
+var PW=null,DATA={entries:[],pwChanged:false},lastCt=null,editId=null,unsub=null,queue=Promise.resolve();
+function setSaved(t){$('#saved').textContent=t}
+function persist(){
+  setSaved('Đang lưu...');
+  queue=queue.then(function(){
+    return encrypt(PW,DATA).then(function(d){
+      lastCt=d.ct;d.updatedAt=Date.now();
+      return api.setDoc(ref,d);
+    }).then(function(){setSaved('Đã lưu')},function(){setSaved('Lưu lỗi, kiểm tra mạng rồi thử lại')});
+  });
+  return queue;
+}
+
+/* ---------- đăng nhập ---------- */
+function msg(el,t,cls){el.textContent=t;el.className='msg '+(cls||'')}
+function login(){
+  var pw=$('#pw').value;if(!pw){return}
+  var m=$('#loginMsg');msg(m,'Đang mở...');$('#btnLogin').disabled=true;
+  ready.then(function(){return api.getDoc(ref)}).then(function(s){
+    if(!s.exists()){
+      if(pw!==DEFAULT_PW){msg(m,'Sai mật khẩu','err');return}
+      PW=pw;DATA={entries:[],pwChanged:false};return persist().then(enter);
+    }
+    var d=s.data();
+    return decrypt(pw,d).then(function(obj){PW=pw;DATA=obj;lastCt=d.ct;enter()},function(){msg(m,'Sai mật khẩu','err')});
+  }).catch(function(e){msg(m,'Không kết nối được dữ liệu online. Thử lại sau.','err')})
+  .then(function(){$('#btnLogin').disabled=false});
+}
+function enter(){
+  try{sessionStorage.setItem('mc_pw',PW)}catch(e){}
+  $('#login').classList.add('hide');$('#app').classList.remove('hide');$('#pw').value='';msg($('#loginMsg'),'');
+  render();
+  if(unsub)unsub();
+  unsub=api.onSnapshot(ref,function(s){
+    if(!s.exists()||s.metadata.hasPendingWrites)return;
+    var d=s.data();if(d.ct===lastCt)return;
+    decrypt(PW,d).then(function(obj){DATA=obj;lastCt=d.ct;render()},function(){lock('Mật khẩu đã được đổi ở máy khác, mở lại bằng mật khẩu mới.')});
+  },function(){});
+}
+function lock(t){
+  PW=null;DATA={entries:[],pwChanged:false};lastCt=null;
+  try{sessionStorage.removeItem('mc_pw')}catch(e){}
+  if(unsub){unsub();unsub=null}
+  $('#app').classList.add('hide');$('#login').classList.remove('hide');msg($('#loginMsg'),t||'');resetForm();
+}
+
+/* ---------- render ---------- */
+function stats(){
+  var e=DATA.entries,t=0,c=0,g=0,b=0;
+  e.forEach(function(x){var a=x.amt||0;t+=a;if(a>0)c++;if(x.side==='Nhà gái')g+=a;else if(x.side==='Nhà trai')b+=a});
+  return {t:t,c:c,avg:c?Math.round(t/c):0,g:g,b:b};
+}
+function render(){
+  var s=stats();
+  $('#sTotal').textContent=fmt(s.t);$('#sCount').textContent=s.c;$('#sAvg').textContent=fmt(s.avg);
+  $('#sGirl').textContent=fmt(s.g);$('#sBoy').textContent=fmt(s.b);
+  $('#defWarn').classList.toggle('hide',!!DATA.pwChanged);
+  var h='';
+  DATA.entries.slice().reverse().forEach(function(x){
+    h+='<div class="item" data-id="'+esc(x.id)+'"><div><div class="n">'+esc(x.name)+'</div><div class="m">'+esc(x.side)+(x.rel?' · '+esc(x.rel):'')+(x.note?' · '+esc(x.note):'')+'</div></div>'
+      +'<div class="a">'+fmt(x.amt)+(x.ret?'<small>trả lễ '+fmt(x.ret)+'</small>':'')+'</div></div>';
+  });
+  $('#list').innerHTML=h||'<div class="sub" style="margin:0">Chưa có khoản nào.</div>';
+}
+
+/* ---------- form ---------- */
+function money(el){el.addEventListener('input',function(){var n=num(el.value);el.value=n?fmt(n):''})}
+money($('#fAmt'));money($('#fRet'));
+function resetForm(){
+  editId=null;['#fName','#fRel','#fAmt','#fRet','#fNote'].forEach(function(s){$(s).value=''});
+  $('#formTitle').textContent='Thêm khoản mừng';$('#editBtns').classList.add('hide');msg($('#formMsg'),'');
+}
+function saveEntry(){
+  var name=$('#fName').value.trim();
+  if(!name){msg($('#formMsg'),'Nhập tên khách','err');return}
+  var o={name:name,side:$('#fSide').value,rel:$('#fRel').value.trim(),amt:num($('#fAmt').value),ret:num($('#fRet').value),note:$('#fNote').value.trim()};
+  if(editId){var i=DATA.entries.findIndex(function(x){return x.id===editId});if(i>=0){o.id=editId;o.ts=DATA.entries[i].ts;DATA.entries[i]=o}}
+  else{o.id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);o.ts=Date.now();DATA.entries.push(o)}
+  var side=o.side;resetForm();$('#fSide').value=side;render();persist();$('#fName').focus();
+}
+$('#btnSave').onclick=saveEntry;
+$('#btnCancel').onclick=resetForm;
+$('#btnDel').onclick=function(){
+  if(!editId||!confirm('Xóa khoản này?'))return;
+  DATA.entries=DATA.entries.filter(function(x){return x.id!==editId});resetForm();render();persist();
+};
+$('#list').addEventListener('click',function(ev){
+  var el=ev.target.closest('.item');if(!el)return;
+  var x=DATA.entries.find(function(y){return y.id===el.dataset.id});if(!x)return;
+  editId=x.id;$('#fName').value=x.name;$('#fSide').value=x.side;$('#fRel').value=x.rel||'';
+  $('#fAmt').value=x.amt?fmt(x.amt):'';$('#fRet').value=x.ret?fmt(x.ret):'';$('#fNote').value=x.note||'';
+  $('#formTitle').textContent='Sửa khoản mừng';$('#editBtns').classList.remove('hide');
+  $('#fName').scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+/* ---------- đổi mật khẩu ---------- */
+var dlg=$('#dlgPw');
+$('#btnPw').onclick=function(){$('#pwNew').value='';$('#pwNew2').value='';msg($('#pwMsg'),'');dlg.showModal()};
+$('#pwCancel').onclick=function(){dlg.close()};
+$('#pwOk').onclick=function(){
+  var a=$('#pwNew').value,b=$('#pwNew2').value;
+  if(a.length<4){msg($('#pwMsg'),'Mật khẩu tối thiểu 4 ký tự','err');return}
+  if(a!==b){msg($('#pwMsg'),'Hai lần nhập chưa khớp','err');return}
+  if(a===DEFAULT_PW){msg($('#pwMsg'),'Không dùng lại mật khẩu mặc định','err');return}
+  PW=a;DATA.pwChanged=true;
+  try{sessionStorage.setItem('mc_pw',PW)}catch(e){}
+  persist().then(function(){render();dlg.close()});
+};
+$('#btnOut').onclick=function(){lock()};
+$('#btnLogin').onclick=login;
+$('#pw').addEventListener('keydown',function(e){if(e.key==='Enter')login()});
+
+/* ---------- xuất xlsx (tự dựng, không cần thư viện) ---------- */
+var CRC=(function(){var t=[];for(var n=0;n<256;n++){var c=n;for(var k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function crc32(u){var c=0xFFFFFFFF;for(var i=0;i<u.length;i++)c=CRC[(c^u[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0}
+function zip(files){
+  var chunks=[],central=[],off=0;
+  function w16(a,v){a.push(v&255,(v>>>8)&255)}function w32(a,v){a.push(v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255)}
+  files.forEach(function(f){
+    var nm=enc.encode(f.n),d=enc.encode(f.d),crc=crc32(d),h=[];
+    w32(h,0x04034b50);w16(h,20);w16(h,0x0800);w16(h,0);w16(h,0);w16(h,0x21);w32(h,crc);w32(h,d.length);w32(h,d.length);w16(h,nm.length);w16(h,0);
+    chunks.push(new Uint8Array(h),nm,d);
+    var c=[];w32(c,0x02014b50);w16(c,20);w16(c,20);w16(c,0x0800);w16(c,0);w16(c,0);w16(c,0x21);w32(c,crc);w32(c,d.length);w32(c,d.length);w16(c,nm.length);w16(c,0);w16(c,0);w16(c,0);w16(c,0);w32(c,0);w32(c,off);
+    central.push(new Uint8Array(c),nm);
+    off+=h.length+nm.length+d.length;
+  });
+  var csz=0;central.forEach(function(x){csz+=x.length});
+  var e=[];w32(e,0x06054b50);w16(e,0);w16(e,0);w16(e,files.length);w16(e,files.length);w32(e,csz);w32(e,off);w16(e,0);
+  return new Blob(chunks.concat(central,[new Uint8Array(e)]),{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+}
+function x(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function cs(r,s,t){return '<c r="'+r+'" s="'+s+'" t="inlineStr"><is><t xml:space="preserve">'+x(t)+'</t></is></c>'}
+function cn(r,s,v){return '<c r="'+r+'" s="'+s+'"><v>'+v+'</v></c>'}
+function cf(r,s,f,v){return '<c r="'+r+'" s="'+s+'"><f>'+x(f)+'</f><v>'+v+'</v></c>'}
+function buildXlsx(){
+  var E=DATA.entries,st=stats(),ret=0,last=513;E.forEach(function(e){ret+=e.ret||0});
+  var rows=[];
+  rows.push('<row r="1">'+cs('A1',2,'BẢNG THEO DÕI TIỀN MỪNG CƯỚI')+'</row>');
+  rows.push('<row r="4">'+cs('A4',3,'TỔNG HỢP')+'</row>');
+  var sm=[['Tổng tiền mừng','SUM(E14:E'+last+')',st.t],['Tổng số khách đã mừng','COUNTIF(E14:E'+last+',">0")',st.c],['Mức mừng trung bình','IFERROR(B5/B6,0)',st.avg],
+    ['Nhà trai','SUMIFS(E14:E'+last+',C14:C'+last+',"Nhà trai")',st.b],['Nhà gái','SUMIFS(E14:E'+last+',C14:C'+last+',"Nhà gái")',st.g],['Tổng tiền đã trả lễ / hoàn lại','SUM(F14:F'+last+')',ret]];
+  sm.forEach(function(r,i){var n=5+i;rows.push('<row r="'+n+'">'+cs('A'+n,4,r[0])+cf('B'+n,5,r[1],r[2])+'</row>')});
+  var H=['STT','Tên khách','Bên','Quan hệ','Số tiền mừng (đ)','Đã trả lễ (đ)','Ghi chú'],L='ABCDEFG',hr='';
+  H.forEach(function(h,i){hr+=cs(L[i]+'13',1,h)});rows.push('<row r="13" ht="30" customHeight="1">'+hr+'</row>');
+  E.forEach(function(e,i){var n=14+i;
+    rows.push('<row r="'+n+'">'+cn('A'+n,6,i+1)+cs('B'+n,6,e.name||'')+cs('C'+n,6,e.side||'')+cs('D'+n,6,e.rel||'')+cn('E'+n,7,e.amt||0)+cn('F'+n,7,e.ret||0)+cs('G'+n,6,e.note||'')+'</row>');
+  });
+  var cols='<cols><col min="1" max="1" width="30" customWidth="1"/><col min="2" max="2" width="24" customWidth="1"/><col min="3" max="3" width="12" customWidth="1"/><col min="4" max="4" width="18" customWidth="1"/><col min="5" max="5" width="20" customWidth="1"/><col min="6" max="6" width="18" customWidth="1"/><col min="7" max="7" width="28" customWidth="1"/></cols>';
+  var sheet='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"><pane ySplit="13" topLeftCell="A14" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>'+cols+'<sheetData>'+rows.join('')+'</sheetData></worksheet>';
+  var styles='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">'
+   +'<fonts count="4"><font><sz val="10"/><name val="Arial"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Arial"/></font><font><b/><sz val="14"/><name val="Arial"/></font><font><b/><sz val="10"/><name val="Arial"/></font></fonts>'
+   +'<fills count="4"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF1F3864"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFD9E1F2"/></patternFill></fill></fills>'
+   +'<borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFBFBFBF"/></left><right style="thin"><color rgb="FFBFBFBF"/></right><top style="thin"><color rgb="FFBFBFBF"/></top><bottom style="thin"><color rgb="FFBFBFBF"/></bottom><diagonal/></border></borders>'
+   +'<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>'
+   +'<cellXfs count="8"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>'
+   +'<xf numFmtId="0" fontId="1" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>'
+   +'<xf numFmtId="0" fontId="2" fillId="0" borderId="0" xfId="0" applyFont="1"/>'
+   +'<xf numFmtId="0" fontId="3" fillId="0" borderId="0" xfId="0" applyFont="1"/>'
+   +'<xf numFmtId="0" fontId="3" fillId="3" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"/>'
+   +'<xf numFmtId="3" fontId="3" fillId="3" borderId="1" xfId="0" applyNumberFormat="1" applyFont="1" applyFill="1" applyBorder="1"/>'
+   +'<xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"/>'
+   +'<xf numFmtId="3" fontId="0" fillId="0" borderId="1" xfId="0" applyNumberFormat="1" applyBorder="1"/></cellXfs></styleSheet>';
+  return zip([
+    {n:'[Content_Types].xml',d:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>'},
+    {n:'_rels/.rels',d:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'},
+    {n:'xl/workbook.xml',d:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Tiền mừng" sheetId="1" r:id="rId1"/></sheets></workbook>'},
+    {n:'xl/_rels/workbook.xml.rels',d:'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>'},
+    {n:'xl/styles.xml',d:styles},
+    {n:'xl/worksheets/sheet1.xml',d:sheet}
+  ]);
+}
+$('#btnXlsx').onclick=function(){
+  var a=document.createElement('a');a.href=URL.createObjectURL(buildXlsx());a.download='tien-mung-cuoi-my-linh-tran-tuan.xlsx';
+  document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1000);
+};
+
+/* tự mở lại nếu cùng phiên */
+try{var sp=sessionStorage.getItem('mc_pw');if(sp){$('#pw').value=sp;login()}}catch(e){}
+})();
+</script>
+</body></html>
